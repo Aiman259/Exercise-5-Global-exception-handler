@@ -17,6 +17,10 @@ public class InstructorController {
     public InstructorController(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "API is running smoothly!";
+    }
 
     @GetMapping
     public List<Instructor> getInstructors() {
@@ -25,7 +29,6 @@ public class InstructorController {
 
     @PostMapping
     public Instructor createInstructor(@Valid @RequestBody CreateInstructorRequest request) {
-        // Tukar borang (DTO) kepada objek sebenar (Model)
         Instructor newInstructor = new Instructor(
             request.getName(),
             request.getEmail(),
