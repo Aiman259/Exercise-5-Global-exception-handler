@@ -1,8 +1,9 @@
 package com.example.Instructorapi.controller;
 
-import com.example.Instructorapi.dto.CreateInstructorRequest;
 import com.example.Instructorapi.model.Instructor;
 import com.example.Instructorapi.service.InstructorService;
+import com.example.Instructorapi.dto.CreateInstructorRequest; // Pastikan import ini ada
+import jakarta.validation.Valid; // Untuk validation
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,6 @@ public class InstructorController {
 
     private final InstructorService instructorService;
 
-    // Dependency Injection melalui Constructor
     public InstructorController(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
@@ -24,7 +24,7 @@ public class InstructorController {
     }
 
     @PostMapping
-    public Instructor createInstructor(@RequestBody CreateInstructorRequest request) {
+    public Instructor createInstructor(@Valid @RequestBody CreateInstructorRequest request) {
         // Tukar borang (DTO) kepada objek sebenar (Model)
         Instructor newInstructor = new Instructor(
             request.getName(),
@@ -32,7 +32,7 @@ public class InstructorController {
             request.getSpecialization(),
             request.getYearsExperience()
         );
-        
+
         return instructorService.addInstructor(newInstructor);
     }
 }
